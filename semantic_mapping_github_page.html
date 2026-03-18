@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semantic Mapping of Urban Mobile Mapping LiDAR Using Panoramic OCR and Geometric Back-Projection</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --ink: #16335f;
+      --muted: #5f6f86;
+      --line: #d9e2ef;
+      --accent: #2d6cdf;
+      --accent-2: #eff5ff;
+      --shadow: 0 12px 32px rgba(22, 51, 95, 0.08);
+      --radius: 20px;
+      --maxw: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+    .hero {
+      padding: 64px 0 36px;
+      background: radial-gradient(circle at top right, #dceaff 0%, #f8fbff 35%, transparent 60%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-2);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary { background: var(--accent); color: white; box-shadow: var(--shadow); }
+    .btn-secondary { background: white; color: var(--ink); border-color: var(--line); }
+
+    .hero-card, .card {
+      background: var(--card);
+      border: 1px solid rgba(217, 226, 239, 0.8);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 24px;
+    }
+
+    .hero-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .mini-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(248, 251, 255, 0.86);
+      border-bottom: 1px solid rgba(217, 226, 239, 0.8);
+    }
+
+    .nav-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.96rem;
+    }
+
+    section { padding: 38px 0; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .section-note { color: var(--muted); max-width: 760px; }
+
+    .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card { padding: 22px; }
+
+    .card h3 { margin-top: 0; margin-bottom: 10px; }
+    .card p { margin: 0; color: var(--muted); }
+
+    .workflow {
+      counter-reset: step;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step {
+      position: relative;
+      padding: 22px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-2);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 { margin: 0 0 8px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    .figure-box {
+      width: 100%;
+      min-height: 280px;
+      border: 2px dashed #bfd0ea;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #f2f7ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .meta .item {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .meta .label { font-size: 0.84rem; color: var(--muted); }
+    .meta .value { font-weight: 800; margin-top: 6px; }
+
+    .citation {
+      background: #0f2445;
+      color: #edf4ff;
+      border-radius: 20px;
+      padding: 22px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.96rem;
+      white-space: pre-wrap;
+    }
+
+    .footer {
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-card {
+      padding: 24px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .grid-3, .grid-2, .workflow, .meta {
+        grid-template-columns: 1fr;
+      }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">Semantic Mapping Paper Page</div>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#datasets">Datasets</a>
+        <a href="#results">Results</a>
+        <a href="#materials">Materials</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="badge">Paper Project Page</div>
+        <h1>Semantic Mapping of Urban Mobile Mapping LiDAR Using Panoramic OCR and Geometric Back-Projection</h1>
+        <p class="sub">
+          A deterministic framework for enriching mobile mapping LiDAR point clouds with semantic information extracted from panoramic street-level imagery through OCR, geometric back-projection, and multi-view fusion.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#materials">View Materials</a>
+          <a class="btn btn-secondary" href="#citation">Copy Citation</a>
+          <a class="btn btn-secondary" href="#contact">Contact</a>
+        </div>
+        <div class="meta">
+          <div class="item"><div class="label">Modality</div><div class="value">Panoramas + LiDAR</div></div>
+          <div class="item"><div class="label">Core Method</div><div class="value">OCR + Geometry</div></div>
+          <div class="item"><div class="label">Output</div><div class="value">Queryable 3D Semantics</div></div>
+          <div class="item"><div class="label">Use Cases</div><div class="value">Digital Twins</div></div>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>What this page includes</h3>
+        <ul class="mini-list">
+          <li>Paper summary and method overview</li>
+          <li>Experiment structure and dataset notes</li>
+          <li>Visual placeholders for key figures</li>
+          <li>Links for PDF, code, data, and supplementary material</li>
+          <li>BibTeX citation block for reuse</li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="overview">
+      <div class="section-head">
+        <div>
+          <h2>Overview</h2>
+          <div class="section-note">This project bridges visual semantics and 3D urban geometry by projecting OCR detections from equirectangular panoramas onto LiDAR facades and fusing repeated observations across views.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Abstract</h3>
+          <p>
+            The framework detects storefront text and business identifiers in panoramic imagery, converts these detections into viewing rays, intersects them with LiDAR-supported facade geometry, and consolidates repeated detections into stable semantic markers. The result is a searchable semantic layer over urban point clouds suitable for digital twins, inventories, and urban information systems.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Highlights</h3>
+          <p>
+            Deterministic and interpretable geometric localization; deep-learning-based OCR extraction; multi-view fusion of repeated detections; semantic querying by facility type, keyword, and brand name; validation on two urban mobile mapping datasets.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="section-head">
+        <div>
+          <h2>Method Workflow</h2>
+          <div class="section-note">The processing chain follows four major stages from OCR extraction to semantic fusion and interactive retrieval.</div>
+        </div>
+      </div>
+      <div class="workflow">
+        <div class="step">
+          <h3>OCR Extraction</h3>
+          <p>CRAFT and EasyOCR detect text regions in panoramas and recover OCR tokens, confidence values, and bounding boxes.</p>
+        </div>
+        <div class="step">
+          <h3>Semantic Parsing</h3>
+          <p>Rule-based taxonomy logic converts raw OCR tokens into facility categories, service keywords, and business names.</p>
+        </div>
+        <div class="step">
+          <h3>Geometric Projection</h3>
+          <p>Bounding-box corners are mapped from equirectangular pixels to 3D rays and intersected with facade-supporting LiDAR geometry.</p>
+        </div>
+        <div class="step">
+          <h3>Fusion and Query</h3>
+          <p>Multi-view detections are clustered into stable markers, enabling interactive semantic search inside the 3D point cloud.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="datasets">
+      <div class="section-head">
+        <div>
+          <h2>Datasets and Experiments</h2>
+          <div class="section-note">Two urban experiments evaluate transferability across imaging systems and acquisition contexts.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Experiment 1 — Enschede, Netherlands</h3>
+          <p>CycloMedia panoramic imagery and mobile mapping LiDAR were used to validate OCR-based semantic extraction, geometric facade localization, and multi-view fusion in a Dutch urban street scene.</p>
+        </div>
+        <div class="card">
+          <h3>Experiment 2 — U.S. Urban Dataset</h3>
+          <p>A Maverick mobile mapping dataset with a Ladybug panoramic camera was used to assess the framework under a different imaging configuration and urban acquisition setting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="results">
+      <div class="section-head">
+        <div>
+          <h2>Key Figures and Results</h2>
+          <div class="section-note">Replace the placeholders below with exported publication figures, teaser images, or animated GIFs from the paper and repository.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Workflow Figure</h3>
+          <div class="figure-box">Insert Figure 2 here<br />Overall pipeline diagram</div>
+        </div>
+        <div class="card">
+          <h3>Geometry Figure</h3>
+          <div class="figure-box">Insert Figure 3 here<br />Geometric back-projection and equirectangular mapping</div>
+        </div>
+        <div class="card">
+          <h3>Experiment 1 Output</h3>
+          <div class="figure-box">Insert result map or semantic point cloud visualization</div>
+        </div>
+        <div class="card">
+          <h3>Experiment 2 Output</h3>
+          <div class="figure-box">Insert result map or projected facade patch visualization</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="materials">
+      <div class="section-head">
+        <div>
+          <h2>Materials</h2>
+          <div class="section-note">Connect these sections to your public repository structure once files are uploaded.</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Paper</h3>
+          <p>
+            <strong>Suggested file:</strong> <code>/assets/paper.pdf</code><br />
+            Add the accepted or preprint PDF here.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Code</h3>
+          <p>
+            <strong>Suggested folders:</strong> <code>/code/ocr</code>, <code>/code/projection</code>, <code>/code/query</code><br />
+            Organize OCR extraction, geometric projection, and querying scripts in separate folders.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Data</h3>
+          <p>
+            <strong>Suggested folder:</strong> <code>/data/</code><br />
+            Include sample metadata, JSON outputs, labels, and lightweight example files. Large raw datasets can be linked externally.
+          </p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card">
+          <h3>Repository Structure</h3>
+          <div class="citation">.
+├── index.html
+├── assets/
+│   ├── paper.pdf
+│   ├── fig2_workflow.png
+│   ├── fig3_geometry.png
+│   └── teaser.png
+├── code/
+│   ├── ocr/
+│   ├── projection/
+│   └── query/
+├── data/
+│   ├── sample_json/
+│   ├── labels/
+│   └── metadata/
+└── README.md</div>
+        </div>
+        <div class="card">
+          <h3>Suggested README Sections</h3>
+          <p>
+            Project overview, installation, dependencies, dataset description, running the OCR pipeline, running geometric back-projection, query examples, results, and citation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="citation">
+      <div class="section-head">
+        <div>
+          <h2>Citation</h2>
+          <div class="section-note">Replace placeholder author and venue fields with the final publication details.</div>
+        </div>
+      </div>
+      <div class="citation">@article{semantic_mapping_mobile_mapping_2026,
+  title   = {Semantic Mapping of Urban Mobile Mapping LiDAR Using Panoramic OCR and Geometric Back-Projection},
+  author  = {Author One and Author Two and Author Three},
+  journal = {Journal Name},
+  year    = {2026},
+  volume  = {xx},
+  number  = {x},
+  pages   = {xxx--xxx},
+  doi     = {TBD}
+}</div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <div>
+          <h2>Contact</h2>
+          <div class="section-note">Add your preferred email, lab page, or Google Scholar profile here.</div>
+        </div>
+      </div>
+      <div class="footer-card">
+        For questions about the paper, code, or data release, add the corresponding contact details here. This section can also include institution logos, acknowledgements, and funding information.
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-card">
+        This page is designed as a GitHub Pages-ready single-file site. Replace placeholders with final figures, links, authors, venue details, and downloadable assets before publishing.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
