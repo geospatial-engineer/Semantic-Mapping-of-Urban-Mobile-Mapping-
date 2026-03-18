@@ -1,0 +1,54 @@
+Image,semantic_category,business_name,confidence
+IMG0012.jpg,CAFE_COFFEE,dinner drinks,1
+IMG0018.jpg,CAFE_COFFEE,ks starbucks,1
+IMG0024.jpg,UNKNOWN,st bucks,0
+IMG0030.jpg,UNKNOWN,starbuck,0
+IMG0036.jpg,CLOTHING_RETAIL,intercity service,1
+IMG0042.jpg,CLOTHING_RETAIL,tony' barber,1
+IMG0048.jpg,SERVICE_CLEANERS,bloominghill 4167817135,1
+IMG0054.jpg,FLORIST,bloominghill flowers,1
+IMG0060.jpg,BEAUTY_WELLNESS,european esthetics,1
+IMG0066.jpg,BEAUTY_WELLNESS,genturian presentaton,1
+IMG0072.jpg,BUSINESS_SERVICE_PRINT,781 6300,1
+IMG0078.jpg,BUSINESS_SERVICE_PRINT,cleaners 416,1
+IMG0084.jpg,FOODSHOP_DESSERT,cleaners ni,1
+IMG0090.jpg,RETAIL_MEDIA,videoflicks 'aners,1
+IMG0096.jpg,RETAIL_MEDIA,185 8828,1
+IMG0102.jpg,RETAIL_MEDIA,vital videoflicks,1
+IMG0108.jpg,RETAIL_MEDIA,videoflicks alty,1
+IMG0114.jpg,UNKNOWN,condominiums krcmar,0
+IMG0120.jpg,REAL_ESTATE_OFFICE,416913 condon,0.5
+IMG0126.jpg,UNKNOWN,condominiums 54005,0
+IMG0132.jpg,UNKNOWN,vida gfs,0
+IMG0138.jpg,NO_TEXT,,0
+IMG0144.jpg,UNKNOWN,,0
+IMG0150.jpg,UNKNOWN,,0
+IMG0156.jpg,UNKNOWN,flo gfs,0
+IMG0162.jpg,UNKNOWN,sale closinc,0
+IMG0168.jpg,UNCLEAR_RETAIL,liquidation complete,0.75
+IMG0174.jpg,UNKNOWN,years liquidation,0
+IMG0180.jpg,UNKNOWN,liquidation sale,0
+IMG0186.jpg,UNKNOWN,cademy hicks,0
+IMG0192.jpg,UNKNOWN,avenue nissan,0
+IMG0198.jpg,BANK,enue nissan,1
+IMG0204.jpg,UNKNOWN,nissan,0
+IMG0210.jpg,BANK,children postnata,1
+IMG0216.jpg,BANK,rbc atment,1
+IMG0222.jpg,BANK,rbc rbc,1
+IMG0228.jpg,UNKNOWN,grandatoy,0
+IMG0234.jpg,BANK_FINANCIAL_SERVICES,cibc 7638,1
+IMG0240.jpg,BANK_FINANCIAL_SERVICES,centr scoliddonk,1
+IMG0246.jpg,BANK_FINANCIAL_SERVICES,cibc cibc,1
+IMG0252.jpg,BANK_FINANCIAL_SERVICES,cibc,1
+IMG0258.jpg,BANK_FINANCIAL_SERVICES,cibc,1
+IMG0264.jpg,BANK_FINANCIAL_SERVICES,cibc,1
+IMG0270.jpg,RETAIL_HOME_IMPROVEMENT,dulux iduluxt,1
+IMG0276.jpg,RETAIL_HOME_IMPROVEMENT,paints dulux,1
+IMG0282.jpg,RETAIL_HOME_IMPROVEMENT,paints dulux,1
+IMG0288.jpg,RETAIL_HOME_IMPROVEMENT,duluxpaints dutuxe,1
+IMG0294.jpg,UNKNOWN,nation,0
+IMG0300.jpg,BANK,national,1
+IMG0306.jpg,BANK,national,1
+IMG0312.jpg,BANK,,0.75
+IMG0318.jpg,BANK,national,1
+IMG0324.jpg,BANK,national,1
